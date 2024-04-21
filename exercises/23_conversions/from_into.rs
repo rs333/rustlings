@@ -24,7 +24,6 @@ impl Default for Person {
     }
 }
 
-
 // Your task is to complete this implementation in order for the line `let p1 =
 // Person::from("Mark,20")` to compile. Please note that you'll need to parse the
 // age component into a `usize` with something like `"4".parse::<usize>()`. The
@@ -41,10 +40,47 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of
 // Person Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
-
 impl From<&str> for Person {
-    fn from(s: &str) -> Person {}
+    fn from(s: &str) -> Person {
+        if s.len() == 0 {
+            Person::default()
+        } else {
+            let mut s_it = s.split(',');
+            let name = match s_it.next() {
+                Some("") | None => return Person::default(),
+                Some(x) => String::from(x),
+            };
+            let age = match s_it.next() {
+                Some("") | None => return Person::default(),
+                Some(x) => x.parse::<usize>(),
+            };
+            if age.is_err() || s_it.count() == 1 {
+                return Person::default();
+            }
+            let age = age.unwrap();
+            Person { name, age }
+        }
+    }
+    // My Original
+    // fn from(s: &str) -> Person {
+    //     if s.len() == 0 {
+    //         Person::default()
+    //     } else {
+    //         let splt: Vec<&str> = s.split(",").collect();
+    //         if splt.len() != 2 || splt[0].len() == 0 {
+    //             Person::default()
+    //         } else {
+    //             let age = splt[1].parse::<usize>();
+    //             if let Err(e) = age {
+    //                 return Person::default();
+    //             }
+    //             Person {
+    //                 name: splt[0].to_string(),
+    //                 age: splt[1].parse::<usize>().unwrap_or(0),
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 fn main() {

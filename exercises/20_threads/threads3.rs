@@ -3,8 +3,6 @@
 // Execute `rustlings hint threads3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 use std::sync::mpsc;
 use std::sync::Arc;
 use std::thread;
@@ -27,10 +25,11 @@ impl Queue {
 }
 
 fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
+    let tx1 = tx.clone();
     thread::spawn(move || {
         for val in q.first_half {
             println!("sending {:?}", val);
-            tx.send(val).unwrap();
+            tx1.send(val).unwrap();
             thread::sleep(Duration::from_secs(1));
         }
     });
@@ -44,7 +43,8 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
     });
 }
 
-#[test]
+// Remove #[test] and changed mode to compile see the
+// output of println!s.
 fn main() {
     let (tx, rx) = mpsc::channel();
     let queue = Queue::new();
@@ -58,6 +58,6 @@ fn main() {
         total_received += 1;
     }
 
-    println!("total numbers received: {}", total_received);
-    assert_eq!(total_received, queue_length)
+    assert_eq!(total_received, queue_length);
+    println!("total numbers received: {}", &total_received);
 }

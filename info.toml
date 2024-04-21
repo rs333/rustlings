@@ -1151,7 +1151,7 @@ https://doc.rust-lang.org/book/ch16-03-shared-state.html#sharing-a-mutext-betwee
 [[exercises]]
 name = "threads3"
 path = "exercises/20_threads/threads3.rs"
-mode = "test"
+mode = "compile"
 hint = """
 An alternate way to handle concurrency between threads is to use an `mpsc`
 (multiple producer, single consumer) channel to communicate.
